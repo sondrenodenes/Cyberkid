@@ -1,5 +1,5 @@
 .hotbar {
-    background-color: #4CAF50; /* Grønn bakgrunnsfarge */
+    background-color: #2679cd; /* Grønn bakgrunnsfarge */
     overflow: hidden;
     padding: 10px 0;
 }
@@ -26,6 +26,6 @@
 }
 
 .hotbar ul li a:hover {
-    background-color: #45a049; /* Lysere grønn ved hover */
+    background-color: #437ec1; /* Lysere grønn ved hover */
     border-radius: 4px;
 }
