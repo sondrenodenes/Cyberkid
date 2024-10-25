@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop - Digital Sikkerhet</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+        .drag-item {
+            padding: 10px;
+            margin: 10px;
+            background-color: #f0f0f0;
+            border: 2px solid #000;
+            cursor: grab;
+        }
+        .drop-zone {
+            width: 40%;
+            min-height: 200px;
+            padding: 10px;
+            border: 2px dashed #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        .dropped {
+            background-color: lightblue;
+        }
+        .correct {
+            background-color: lightgreen;
+        }
+        .wrong {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+    <h1>Drag and Drop - Lær Digital Sikkerhet</h1>
+    <p>Dra handlingene til riktig kategori: Sikker eller Usikker.</p>
+    <div class="container">
+        <div>
+            <div class="drag-item" draggable="true" id="item1">Bruke et sterkt passord</div>
+            <div class="drag-item" draggable="true" id="item2">Dele personlig informasjon på sosiale medier</div>
+            <div class="drag-item" draggable="true" id="item3">Klikke på ukjente lenker i e-post</div>
+            <div class="drag-item" draggable="true" id="item4">Gratis rubux videoer</div>
+        </div>
+        <div class="drop-zone" id="safe-zone">Riktig</div>
+        <div class="drop-zone" id="unsafe-zone">Feil</div>
+    </div>
+
+    <p id="message"></p>
+
+    <script>
+        // Definer drag- og drop-funksjonaliteten
+
+        let totalDropped = 0;
+        const totalItems = 4;
+
+
+        const items = document.querySelectorAll('.drag-item');
+        const safeZone = document.getElementById('safe-zone');
+        const unsafeZone = document.getElementById('unsafe-zone');
+        const message = document.getElementById('message');
+
+        items.forEach(item => {
+            item.addEventListener('dragstart', dragStart);
+        });
+
+        [safeZone, unsafeZone].forEach(zone => {
+            zone.addEventListener('dragover', dragOver);
+            zone.addEventListener('drop', dropItem);
+        });
+
+        function dragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.id);
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function dropItem(e) {
+            e.preventDefault();
+            const id = e.dataTransfer.getData('text');
+            const item = document.getElementById(id);
+            e.target.appendChild(item);
+            item.classList.add('dropped');
+
+
+            totalDropped++;
+
+
+            if (totalDropped === totalItems) {
+                sjekkResultater();
+            }
+        }
+            // const correctSafe = id === 'item1' && e.target.id === 'safe-zone';
+            // const correctUnsafe = (id === 'item2' || id === 'item3' || id === 'item4') && e.target.id === 'unsafe-zone';
+
+            function sjekkResultater() {
+            let correctCount = 0;
+
+            // Sjekk hvert element
+            items.forEach(item => {
+                const parentZone = item.parentElement.id;
+
+                // Sjekk om hvert element er plassert i riktig sone
+                if ((item.id === 'item1' && parentZone === 'safe-zone') || 
+                    ((item.id === 'item2' || item.id === 'item3' || item.id === 'item4') && parentZone === 'unsafe-zone')) {
+                    correctCount++;
+                    item.classList.remove('dropped');
+                    item.classList.add('correct');
+                } else {
+                    item.classList.remove('dropped');
+                    item.classList.add('wrong');
+                }
+            });
+
+            // Vis resultat etter at alle elementene er sjekket
+            message.textContent = `Du plasserte ${correctCount} riktige av ${totalItems}!`;
+        }
+    </script>
+</body>
+</html>
