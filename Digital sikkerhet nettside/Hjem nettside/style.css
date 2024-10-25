@@ -1,0 +1,31 @@
+.hotbar {
+    background-color: #4CAF50; /* Grønn bakgrunnsfarge */
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+.hotbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Horisontal layout */
+    justify-content: center; /* Sentrerer menyen */
+}
+
+.hotbar ul li {
+    margin: 0 15px; /* Mellomrom mellom lenkene */
+}
+
+.hotbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+.hotbar ul li a:hover {
+    background-color: #45a049; /* Lysere grønn ved hover */
+    border-radius: 4px;
+}
