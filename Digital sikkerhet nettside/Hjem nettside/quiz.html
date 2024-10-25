@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersikkerhet Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Cybersikkerhet Quiz</h1>
+
+    <div class="question" id="question1">
+        <p>1. Hva bør du gjøre hvis en fremmed sender deg en melding på nettet?</p>
+        <input type="radio" name="q1" value="wrong">Svar dem med en gang.<br>
+        <input type="radio" name="q1" value="right">Ignorer meldingen og si ifra til en voksen.<br>
+        <input type="radio" name="q1" value="wrong">Send dem din personlige informasjon.<br>
+    </div>
+
+    <div class="question" id="question2">
+        <p>2. Hva er et sikkert passord?</p>
+        <input type="radio" name="q2" value="wrong">123456<br>
+        <input type="radio" name="q2" value="right">Et passord med tall, bokstaver og symboler.<br>
+        <input type="radio" name="q2" value="wrong">Navnet på kjæledyret ditt.<br>
+    </div>
+
+    <div class="question" id="question3">
+        <p>3. Hva betyr det når en nettside har en hengelås i adressefeltet?</p>
+        <input type="radio" name="q3" value="right">Nettsiden er trygg og bruker sikker tilkobling.<br>
+        <input type="radio" name="q3" value="wrong">Nettsiden selger ting til salgs.<br>
+        <input type="radio" name="q3" value="wrong">Det betyr ingenting spesielt.<br>
+    </div>
+
+    <div class="question" id="question4">
+        <p>4. Hvor ofte bør du oppdatere passordet ditt?</p>
+        <input type="radio" name="q4" value="wrong">Aldri.<br>
+        <input type="radio" name="q4" value="right">Jevnlig, minst hver 6. måned.<br>
+        <input type="radio" name="q4" value="wrong">Bare når du glemmer det.<br>
+    </div>
+
+    <button onclick="checkQuiz()">Sjekk svar</button>
+
+    <p id="result"></p>
+</div>
+
+<script>
+    function checkQuiz() {
+        let score = 0;
+
+        if (document.querySelector('input[name="q1"]:checked').value === "right") {
+            score++;
+        }
+        if (document.querySelector('input[name="q2"]:checked').value === "right") {
+            score++;
+        }
+        if (document.querySelector('input[name="q3"]:checked').value === "right") {
+            score++;
+        }
+        if (document.querySelector('input[name="q4"]:checked').value === "right") {
+            score++;
+        }
+
+        document.getElementById("result").innerHTML = "Du fikk " + score + " av 4 riktige!";
+    }
+</script>
+
+</body>
+</html>
