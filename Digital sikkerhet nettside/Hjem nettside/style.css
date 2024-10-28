@@ -29,3 +29,10 @@
     background-color: #437ec1; /* Lysere grønn ved hover */
     border-radius: 4px;
 }
+
+.logo-container {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Optional: Centers vertically if the container has height */
+    margin: 20px 0; /* Optional: Add margin around the logo */
+}
