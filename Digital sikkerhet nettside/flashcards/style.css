@@ -70,6 +70,7 @@ h1 {
     background-color: #aa1a1a; /* Grønn bakgrunnsfarge */
     overflow: hidden;
     padding: 10px 0;
+    width: 100vw; /* Full width of the viewport */
 }
 
 .hotbar ul {
