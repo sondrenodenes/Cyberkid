@@ -1,5 +1,5 @@
 .hotbar {
-    background-color: #2679cd; /* Grønn bakgrunnsfarge */
+    background-color: #aa1a1a; /* Grønn bakgrunnsfarge */
     overflow: hidden;
     padding: 10px 0;
 }
@@ -26,11 +26,11 @@
 }
 
 .hotbar ul li a:hover {
-    background-color: #437ec1; /* Lysere grønn ved hover */
+    background-color: hsl(0, 0%, 0%); /* Lysere grønn ved hover */
     border-radius: 4px;
 }
 footer {
-    background-color:#d87676; /* Dark background color */
+    background-color:#333; /* Dark background color */
     color: #f8f7f7; /* White text color */
     padding: 20px;
     text-align: center;
