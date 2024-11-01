@@ -13,6 +13,62 @@
             <li><a href="../fleshcard.html">Flashcard</a></li>
         </ul>
     </nav>
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beskytt Ditt Datasystem</title>
+    <style>
+        /* CSS for popup-en */
+        #instructions {
+            display: none; /* Skjult som standard */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1000; /* Over andre elementer */
+        }
+        #overlay {
+            display: none; /* Skjult som standard */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999; /* Under popup-en */
+        }
+        
+        /* Her kan du legge til flere CSS-regler for spillet ditt */
+    </style>
+</head>
+<body>
+
+<!-- Popup for bruksanvisning -->
+<div id="overlay"></div>
+
+<div id="instructions">
+    <h2>Bruksanvisning for Spillet</h2>
+    <p><strong>Tittel:</strong> Beskytt Ditt Datasystem!</p>
+    <p><strong>Mål:</strong> Målet med spillet er å navigere gjennom en labyrint og fjerne falske lenker ved å svare på spørsmål. Samle poeng ved å bruke antivirus og svare riktig på spørsmål.</p>
+    <h3>Spilleregler:</h3>
+    <ol>
+        <li><strong>Navigering:</strong> Bruk piltastene (oppover, nedover, venstre, høyre) på tastaturet for å flytte spilleren gjennom labyrinten.</li>
+        <li><strong>Falske Lenker:</strong> Når du står på en falsk lenke, vil du bli stilt et spørsmål. Svar på spørsmålet ved å skrive inn nummeret på det riktige svaret.</li>
+        <li><strong>Antivirus:</strong> Du kan bruke antivirus for å fjerne falske lenker uten å måtte svare på spørsmål. Hver gang du bruker antivirus, får du 5 poeng, men du må ha antivirus tilgjengelig.</li>
+        <li><strong>Poengsystem:</strong> Få poeng ved å bruke antivirus, svare riktig og miste poeng ved feil svar. Din totale poengsum vises på skjermen.</li>
+        <li><strong>Mål:</strong> Samle så mange poeng som mulig ved å navigere, fjerne lenker og svare på spørsmål.</li>
+        <li><strong>Avslutte Spillet:</strong> Spillet kan avsluttes når du har fjernet alle falske lenker eller når du ønsker å stoppe å spille.</li>
+    </ol>
+    <p><strong>Lykke til!</strong> Beskytt datamaskinen din og samle poeng!</p>
+    <button id="startGame">Start Spillet</button>
+</div>
+
+<!-- Din eksisterende spillkode går her -->
     <meta charset="UTF-8">
     <title>Cybersikkerhetslabyrinten</title>
     <style>
@@ -36,6 +92,7 @@
     <canvas id="gameCanvas" width="400" height="400"></canvas>
     <p id="level">Nivå: 1</p>
     <p id="antivirus">Antivirus tilgjengelig: 0</p>
+    <p id="score">Poeng: 0</p> <!-- Legger til poengvisning -->
     <p id="message">Bruk piltastene for å bevege deg!</p>
     <p id="question"></p>
 
@@ -110,6 +167,7 @@
         let currentLevel = 0;
         let maze = levels[currentLevel];
         let antivirusCount = 0;
+        let score = 0; // Variabel for å spore poeng
         let hasKey = false;
         const tileSize = 40;
         const player = { x: 1, y: 1 };
@@ -215,6 +273,7 @@
                 if (antivirusCount > 0) {
                     maze[newY][newX] = 0; 
                     antivirusCount--; 
+                    score += 5; // Øker poeng
                     document.getElementById("message").textContent = "Du har brukt et antivirus!";
                 } else {
                     askQuestion(newX, newY); 
@@ -247,10 +306,15 @@
                 let answer = prompt(q.question + "\n1. " + q.options[0] + "\n2. " + q.options[1]);
                 if (parseInt(answer) - 1 === q.correct) {
                     document.getElementById("message").textContent = "Riktig! Lenken er fjernet.";
-                    maze[y][x] = 0; // Fjerne den falske lenken
+                    maze[y][x] = 0; // Fjerner den falske lenken
+                    score += 10; // Øker poeng ved riktig svar
+                    document.getElementById("score").textContent = `Poeng: ${score}`; // Oppdaterer poengvisning
                 } else {
                     document.getElementById("message").textContent = "Feil svar. Prøv igjen.";
+                    score -= 5; // Reduserer poeng ved feil svar
+                     document.getElementById("score").textContent = `Poeng: ${score}`; // Oppdaterer poengvisning
                 }
+
                 drawMaze();
             }, 500);
         }
@@ -281,5 +345,30 @@
 
         drawMaze();
     </script>
+    <!-- <canvas id="gameCanvas" width="800" height="600"></canvas> -->
+
+    <script>
+        // Vise popup-en med bruksanvisning ved last av siden
+        window.onload = function() {
+            document.getElementById('instructions').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+    
+        // Start spillet når knappen trykkes
+        document.getElementById('startGame').onclick = function() {
+            document.getElementById('instructions').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            startSpillet(); // Kall funksjonen som starter spillet
+        }
+    
+        function startSpillet() {
+            // Her kan du legge inn koden som starter spillet
+            console.log("Spillet har startet!"); // Midlertidig for demonstrasjon
+            // Kall til den eksisterende spillkoden her
+        }
+    </script>
+    
+    </body>
+    
 </body>
 </html>
