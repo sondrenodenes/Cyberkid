@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <title>Cybersikkerhetslabyrinten</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+        }
+        #gameCanvas {
+            border: 2px solid #000;
+            background-color: #ffffff;
+        }
+        #message, #question {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cybersikkerhetslabyrinten</h1>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <p id="level">Nivå: 1</p>
+    <p id="antivirus">Antivirus tilgjengelig: 0</p>
+    <p id="message">Bruk piltastene for å bevege deg!</p>
+    <p id="question"></p>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Labyrinter for fem nivåer
+        const levels = [
+            [
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 0, 0, 0, 1, 3, 0, 2, 4, 1],
+                [1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
+                [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+                [1, 0, 1, 1, 1, 1, 0, 1, 0, 1],
+                [1, 0, 0, 2, 0, 1, 0, 3, 0, 1],
+                [1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+                [1, 0, 0, 0, 0, 0, 2, 1, 0, 1],
+                [1, 0, 1, 1, 1, 1, 0, 0, 5, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            ],
+            [
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 0, 0, 1, 1, 0, 3, 0, 0, 1],
+                [1, 0, 1, 0, 0, 0, 1, 1, 0, 1],
+                [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+                [1, 2, 0, 1, 1, 1, 2, 1, 4, 1],
+                [1, 1, 0, 0, 3, 0, 0, 0, 0, 1],
+                [1, 0, 1, 1, 1, 0, 1, 1, 5, 1],
+                [1, 0, 2, 0, 0, 0, 2, 1, 0, 1],
+                [1, 0, 1, 1, 1, 1, 0, 0, 0, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            ],
+            [
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 0, 0, 1, 1, 0, 3, 0, 0, 1],
+                [1, 0, 1, 0, 1, 0, 1, 2, 0, 1],
+                [1, 0, 1, 0, 1, 3, 0, 1, 0, 1],
+                [1, 2, 0, 1, 1, 1, 2, 1, 4, 1],
+                [1, 1, 0, 0, 3, 0, 0, 0, 0, 1],
+                [1, 0, 3, 1, 1, 0, 1, 1, 5, 1],
+                [1, 0, 2, 0, 0, 0, 2, 1, 0, 1],
+                [1, 0, 1, 1, 1, 1, 0, 0, 0, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            ],
+            [
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 0, 3, 0, 1, 0, 1, 0, 0, 1],
+                [1, 0, 1, 0, 1, 0, 1, 2, 0, 1],
+                [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+                [1, 0, 1, 1, 1, 1, 0, 1, 4, 1],
+                [1, 0, 0, 2, 0, 1, 0, 3, 0, 1],
+                [1, 1, 1, 0, 1, 1, 1, 1, 5, 1],
+                [1, 0, 0, 0, 0, 0, 3, 1, 0, 1],
+                [1, 0, 1, 1, 1, 1, 0, 0, 0, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            ],
+            [
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 0, 3, 0, 1, 2, 1, 2, 0, 1],
+                [1, 0, 1, 0, 1, 3, 1, 1, 0, 1],
+                [1, 0, 1, 2, 0, 0, 0, 1, 0, 1],
+                [1, 0, 1, 1, 1, 1, 0, 1, 4, 1],
+                [1, 0, 0, 2, 0, 1, 0, 2, 0, 1],
+                [1, 1, 1, 0, 1, 1, 1, 1, 5, 1],
+                [1, 0, 0, 0, 0, 0, 3, 1, 0, 1],
+                [1, 0, 1, 1, 1, 1, 0, 0, 0, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            ]
+        ];
+
+        let currentLevel = 0;
+        let maze = levels[currentLevel];
+        let antivirusCount = 0;
+        let hasKey = false;
+        const tileSize = 40;
+        const player = { x: 1, y: 1 };
+        const goal = { x: 8, y: 8 };
+        const questions = [
+            // Nivå 1
+            [
+                {
+                    question: "Hva bør du gjøre hvis du får en mistenkelig e-post?",
+                    options: ["Åpne den og se hva det gjelder", "Slette e-posten"],
+                    correct: 1
+                },
+                {
+                    question: "Hva er to-faktor-autentisering?",
+                    options: ["En ekstra sikkerhetslag for innlogging", "Et sett med passord"],
+                    correct: 0
+                }
+            ],
+            // Nivå 2
+            [
+                {
+                    question: "Hvorfor er det viktig å bruke sterke passord?",
+                    options: ["For å hindre uautorisert tilgang", "For å huske dem lettere"],
+                    correct: 0
+                },
+                {
+                    question: "Hva er phishing?",
+                    options: ["En type fiske", "Forsøk på å lure deg til å gi fra deg personlig informasjon"],
+                    correct: 1
+                }
+            ],
+            // Nivå 3
+            [
+                {
+                    question: "Hvordan kan du beskytte deg mot virus?",
+                    options: ["Ved å bruke antivirusprogramvare", "Ved å ikke bruke internett"],
+                    correct: 0
+                },
+                {
+                    question: "Hva skal du gjøre hvis du ser en mistenkelig lenke?",
+                    options: ["Klikk på den for å se hva det er", "Ikke klikk og rapporter det"],
+                    correct: 1
+                }
+            ],
+            // Nivå 4
+            [
+                {
+                    question: "Hva er en brannmur?",
+                    options: ["En type ild", "En sikkerhetskomponent som beskytter nettverket ditt"],
+                    correct: 1
+                },
+                {
+                    question: "Hvorfor bør du oppdatere enheten din?",
+                    options: ["For å få nye funksjoner", "For å fikse sikkerhetshull"],
+                    correct: 1
+                }
+            ],
+            // Nivå 5
+            [
+                {
+                    question: "Hva er en skadelig programvare?",
+                    options: ["Programvare designet for å skade eller utnytte datamaskiner", "En type spill"],
+                    correct: 0
+                },
+                {
+                    question: "Hva er det tryggeste stedet å lagre passord?",
+                    options: ["I en notatbok", "I en passordbehandling"],
+                    correct: 1
+                }
+            ]
+        ];
+
+        function drawMaze() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let row = 0; row < maze.length; row++) {
+                for (let col = 0; col < maze[row].length; col++) {
+                    switch (maze[row][col]) {
+                        case 1: ctx.fillStyle = "#000"; ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize); break; // Vegg
+                        case 2: ctx.fillStyle = "#ff0000"; ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize); break; // Falsk lenke
+                        case 3: ctx.fillStyle = "#00ff00"; ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize); break; // Antivirus
+                        case 4: ctx.fillStyle = "#ffa500"; ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize); break; // Nøkkel
+                        case 5: ctx.fillStyle = "#ffd700"; ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize); break; // Mål
+                    }
+                }
+            }
+            drawPlayer();
+            document.getElementById("antivirus").textContent = `Antivirus tilgjengelig: ${antivirusCount}`;
+            document.getElementById("level").textContent = `Nivå: ${currentLevel + 1}`;
+        }
+
+        function drawPlayer() {
+            ctx.fillStyle = "#0000ff";
+            ctx.beginPath();
+            ctx.arc(player.x * tileSize + tileSize / 2, player.y * tileSize + tileSize / 2, tileSize / 2 - 4, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function movePlayer(dx, dy) {
+            const newX = player.x + dx;
+            const newY = player.y + dy;
+            if (maze[newY][newX] === 1) return; // Vegg
+            if (maze[newY][newX] === 2) { 
+                if (antivirusCount > 0) {
+                    maze[newY][newX] = 0; 
+                    antivirusCount--; 
+                    document.getElementById("message").textContent = "Du har brukt et antivirus!";
+                } else {
+                    askQuestion(newX, newY); 
+                    return;
+                }
+            }
+            if (maze[newY][newX] === 3) { 
+                antivirusCount++; 
+                maze[newY][newX] = 0; 
+            }
+            if (maze[newY][newX] === 4) { 
+                hasKey = true; 
+                maze[newY][newX] = 0; 
+            }
+            if (maze[newY][newX] === 5 && hasKey) { 
+                nextLevel(); 
+                return; 
+            }
+            player.x = newX; 
+            player.y = newY;
+            drawMaze();
+        }
+
+        function askQuestion(x, y) {
+            const levelQuestions = questions[currentLevel];
+            const q = levelQuestions[Math.floor(Math.random() * levelQuestions.length)];
+            document.getElementById("question").textContent = q.question;
+            setTimeout(() => {
+                let answer = prompt(q.question + "\n1. " + q.options[0] + "\n2. " + q.options[1]);
+                if (parseInt(answer) - 1 === q.correct) {
+                    document.getElementById("message").textContent = "Riktig! Lenken er fjernet.";
+                    maze[y][x] = 0; // Fjerne den falske lenken
+                } else {
+                    document.getElementById("message").textContent = "Feil svar. Prøv igjen.";
+                }
+                drawMaze();
+            }, 500);
+        }
+
+        function nextLevel() {
+            currentLevel++;
+            if (currentLevel < levels.length) {
+                maze = levels[currentLevel];
+                antivirusCount = 0; 
+                hasKey = false;
+                player.x = 1; 
+                player.y = 1;
+                document.getElementById("message").textContent = "Nytt nivå!";
+                drawMaze();
+            } else {
+                document.getElementById("message").textContent = "Gratulerer! Du har fullført spillet!";
+            }
+        }
+
+        window.addEventListener("keydown", (event) => {
+            switch (event.key) {
+                case "ArrowUp": movePlayer(0, -1); break;
+                case "ArrowDown": movePlayer(0, 1); break;
+                case "ArrowLeft": movePlayer(-1, 0); break;
+                case "ArrowRight": movePlayer(1, 0); break;
+            }
+        });
+
+        drawMaze();
+    </script>
+</body>
+</html>
