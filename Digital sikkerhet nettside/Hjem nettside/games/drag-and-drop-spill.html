@@ -52,16 +52,17 @@
 </head>
 <body>
     <h1>Drag and Drop - Lær Digital Sikkerhet</h1>
-    <p>Dra handlingene til riktig kategori: Sikker eller Usikker.</p>
+    <p>Dra handlingene til riktig kategori: Riktig/trygt eller Feil/ikke trygt.</p>
     <div class="container">
         <div>
-            <div class="drag-item" draggable="true" id="item1">Bruke et sterkt passord</div>
-            <div class="drag-item" draggable="true" id="item2">Dele personlig informasjon på sosiale medier</div>
+            <div class="drag-item" draggable="true" id="item1">Bruke passord som inneholder tall, bokstaver og spesialtegn</div>
+            <div class="drag-item" draggable="true" id="item2">Dele personlig informasjon på sosiale medier/over nett</div>
             <div class="drag-item" draggable="true" id="item3">Klikke på ukjente lenker i e-post</div>
-            <div class="drag-item" draggable="true" id="item4">Gratis rubux videoer</div>
+            <div class="drag-item" draggable="true" id="item4">Lenke som git deg gratis robux</div>
+            <div class="drag-item" draggable="true" id="item5">koble til hvilket som helst gratis Wifi</div>
         </div>
-        <div class="drop-zone" id="safe-zone">Riktig</div>
-        <div class="drop-zone" id="unsafe-zone">Feil</div>
+        <div class="drop-zone" id="safe-zone">Riktig/trygt</div>
+        <div class="drop-zone" id="unsafe-zone">Feil/ikke trygt</div>
     </div>
 
     <p id="message"></p>
@@ -117,24 +118,27 @@
             let correctCount = 0;
 
             // Sjekk hvert element
-            items.forEach(item => {
-                const parentZone = item.parentElement.id;
+items.forEach(item => {
+    const parentZone = item.parentElement.id;
 
-                // Sjekk om hvert element er plassert i riktig sone
-                if ((item.id === 'item1' && parentZone === 'safe-zone') || 
-                    ((item.id === 'item2' || item.id === 'item3' || item.id === 'item4') && parentZone === 'unsafe-zone')) {
-                    correctCount++;
-                    item.classList.remove('dropped');
-                    item.classList.add('correct');
-                } else {
-                    item.classList.remove('dropped');
-                    item.classList.add('wrong');
-                }
-            });
+    // Sjekk om hvert element er plassert i riktig sone
+    if ((item.id === 'item1' || item.id === 'item5') && parentZone === 'safe-zone') {
+        correctCount++;
+        item.classList.remove('dropped');
+        item.classList.add('correct');
+    } else if ((item.id === 'item2' || item.id === 'item3' || item.id === 'item4') && parentZone === 'unsafe-zone') {
+        correctCount++;
+        item.classList.remove('dropped');
+        item.classList.add('correct');
+    } else {
+        item.classList.remove('dropped');
+        item.classList.add('wrong');
+    }
+});
 
-            // Vis resultat etter at alle elementene er sjekket
-            message.textContent = `Du plasserte ${correctCount} riktige av ${totalItems}!`;
-        }
+// Vis resultat etter at alle elementene er sjekket
+message.textContent = `Du plasserte ${correctCount} riktige av ${totalItems}!`;
+
     </script>
 </body>
 </html>
