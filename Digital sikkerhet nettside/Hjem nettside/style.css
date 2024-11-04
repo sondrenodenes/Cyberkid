@@ -1,0 +1,93 @@
+.hotbar {
+    background-color: #aa1a1a; /* Grønn bakgrunnsfarge */
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+.hotbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Horisontal layout */
+    justify-content: center; /* Sentrerer menyen */
+}
+
+.hotbar ul li {
+    margin: 0 15px; /* Mellomrom mellom lenkene */
+}
+
+.hotbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+.hotbar ul li a:hover {
+    background-color: hsl(0, 0%, 0%); /* Lysere grønn ved hover */
+    border-radius: 4px;
+}
+footer {
+    background-color:#333; /* Dark background color */
+    color: #f8f7f7; /* White text color */
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+  
+  .footer-logo {
+    max-width: 100px; /* Adjust the size of the logo */
+    margin-right: 20px;
+  }
+  
+  .contact-bar h3 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+  
+  .contact-bar p {
+    margin: 5px 0;
+    font-size: 0.9em;
+  }
+  
+  @media (max-width: 600px) {
+    .footer-content {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .footer-logo {
+      margin-bottom: 15px;
+    }
+  }
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+section {
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #2c3e50;
+}
