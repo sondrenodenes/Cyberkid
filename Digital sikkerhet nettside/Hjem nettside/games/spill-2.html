@@ -54,15 +54,15 @@
 <div id="instructions">
     <h2>Bruksanvisning for Spillet</h2>
     <p><strong>Tittel:</strong> Beskytt Ditt Datasystem!</p>
-    <p><strong>Mål:</strong> Målet med spillet er å navigere gjennom en labyrint og fjerne falske lenker ved å svare på spørsmål. Samle poeng ved å bruke antivirus og svare riktig på spørsmål.</p>
+    <p><strong>Mål:</strong> Målet med spillet er å navigere gjennom en labyrint og fjerne virus ved å svare på spørsmål. Samle poeng ved å bruke antivirus og svare riktig på spørsmål.</p>
     <h3>Spilleregler:</h3>
     <ol>
         <li><strong>Navigering:</strong> Bruk piltastene (oppover, nedover, venstre, høyre) på tastaturet for å flytte spilleren gjennom labyrinten.</li>
-        <li><strong>Falske Lenker:</strong> Når du står på en falsk lenke, vil du bli stilt et spørsmål. Svar på spørsmålet ved å skrive inn nummeret på det riktige svaret.</li>
-        <li><strong>Antivirus:</strong> Du kan bruke antivirus for å fjerne falske lenker uten å måtte svare på spørsmål. Hver gang du bruker antivirus, får du 5 poeng, men du må ha antivirus tilgjengelig.</li>
+        <li><strong>Virus:</strong> Når du står på eit virus, vil du bli stilt et spørsmål. Svar på spørsmålet ved å skrive inn nummeret på det riktige svaret.</li>
+        <li><strong>Antivirus:</strong> Du kan bruke antivirus for å fjerne virus uten å måtte svare på spørsmål. Hver gang du bruker antivirus, får du 5 poeng, men du må ha antivirus tilgjengelig.</li>
         <li><strong>Poengsystem:</strong> Få poeng ved å bruke antivirus, svare riktig og miste poeng ved feil svar. Din totale poengsum vises på skjermen.</li>
         <li><strong>Mål:</strong> Samle så mange poeng som mulig ved å navigere, fjerne lenker og svare på spørsmål.</li>
-        <li><strong>Avslutte Spillet:</strong> Spillet kan avsluttes når du har fjernet alle falske lenker eller når du ønsker å stoppe å spille.</li>
+        <li><strong>Fullfør spillet:</strong> for å fullføre spillet må du gå gjennom alle nivåene. ved å samle nøkklene og gå gjennom mål.</li>
     </ol>
     <p><strong>Lykke til!</strong> Beskytt datamaskinen din og samle poeng!</p>
     <button id="startGame">Start Spillet</button>
@@ -102,67 +102,74 @@
 
         // Labyrinter for fem nivåer
         const levels = [
-            [
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 0, 0, 0, 1, 3, 0, 2, 4, 1],
-                [1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
-                [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
-                [1, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-                [1, 0, 0, 2, 0, 1, 0, 3, 0, 1],
-                [1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
-                [1, 0, 0, 0, 0, 0, 2, 1, 0, 1],
-                [1, 0, 1, 1, 1, 1, 0, 0, 5, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-            ],
-            [
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 0, 0, 1, 1, 0, 3, 0, 0, 1],
-                [1, 0, 1, 0, 0, 0, 1, 1, 0, 1],
-                [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
-                [1, 2, 0, 1, 1, 1, 2, 1, 4, 1],
-                [1, 1, 0, 0, 3, 0, 0, 0, 0, 1],
-                [1, 0, 1, 1, 1, 0, 1, 1, 5, 1],
-                [1, 0, 2, 0, 0, 0, 2, 1, 0, 1],
-                [1, 0, 1, 1, 1, 1, 0, 0, 0, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-            ],
-            [
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 0, 0, 1, 1, 0, 3, 0, 0, 1],
-                [1, 0, 1, 0, 1, 0, 1, 2, 0, 1],
-                [1, 0, 1, 0, 1, 3, 0, 1, 0, 1],
-                [1, 2, 0, 1, 1, 1, 2, 1, 4, 1],
-                [1, 1, 0, 0, 3, 0, 0, 0, 0, 1],
-                [1, 0, 3, 1, 1, 0, 1, 1, 5, 1],
-                [1, 0, 2, 0, 0, 0, 2, 1, 0, 1],
-                [1, 0, 1, 1, 1, 1, 0, 0, 0, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-            ],
-            [
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 0, 3, 0, 1, 0, 1, 0, 0, 1],
-                [1, 0, 1, 0, 1, 0, 1, 2, 0, 1],
-                [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
-                [1, 0, 1, 1, 1, 1, 0, 1, 4, 1],
-                [1, 0, 0, 2, 0, 1, 0, 3, 0, 1],
-                [1, 1, 1, 0, 1, 1, 1, 1, 5, 1],
-                [1, 0, 0, 0, 0, 0, 3, 1, 0, 1],
-                [1, 0, 1, 1, 1, 1, 0, 0, 0, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-            ],
-            [
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 0, 3, 0, 1, 2, 1, 2, 0, 1],
-                [1, 0, 1, 0, 1, 3, 1, 1, 0, 1],
-                [1, 0, 1, 2, 0, 0, 0, 1, 0, 1],
-                [1, 0, 1, 1, 1, 1, 0, 1, 4, 1],
-                [1, 0, 0, 2, 0, 1, 0, 2, 0, 1],
-                [1, 1, 1, 0, 1, 1, 1, 1, 5, 1],
-                [1, 0, 0, 0, 0, 0, 3, 1, 0, 1],
-                [1, 0, 1, 1, 1, 1, 0, 0, 0, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-            ]
-        ];
+    // Level 1: Enkel layout med flere åpne stier
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 3, 0, 0, 2, 0, 1],
+        [1, 0, 1, 1, 1, 0, 1, 1, 4, 1],
+        [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+        [1, 0, 2, 0, 0, 0, 2, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 3, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 4, 0, 1, 1, 1, 0, 0, 5, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    ],
+    // Level 2: Moderat utfordring med flere virus i midten
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 3, 0, 0, 1, 1, 0, 0, 2, 1],
+        [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 3, 0, 1, 4, 1],
+        [1, 2, 0, 1, 1, 1, 0, 0, 0, 1],
+        [1, 1, 0, 2, 0, 3, 1, 1, 0, 1],
+        [1, 1, 1, 1, 0, 0, 0, 0, 5, 1],
+        [1, 0, 0, 2, 1, 1, 0, 0, 0, 1],
+        [1, 0, 3, 0, 1, 1, 0, 1, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    ],
+    // Level 3: Kompleks layout med flere antivirus og nøkkel nær målet
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 3, 0, 1, 0, 0, 0, 2, 4, 1],
+        [1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 1, 1, 0, 1, 5, 1],
+        [1, 0, 1, 0, 1, 3, 0, 0, 0, 1],
+        [1, 2, 0, 1, 1, 1, 1, 1, 0, 1],
+        [1, 0, 1, 1, 1, 2, 0, 0, 0, 1],
+        [1, 0, 0, 3, 0, 1, 0, 1, 0, 1],
+        [1, 4, 0, 1, 0, 0, 2, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    ],
+    // Level 4: Mye mer avansert med flere stengte vegger og virus
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 3, 0, 1, 2, 1, 3, 0, 1],
+        [1, 2, 1, 0, 1, 1, 1, 0, 0, 1],
+        [1, 0, 1, 0, 1, 4, 1, 0, 5, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+        [1, 3, 0, 0, 0, 3, 0, 1, 2, 1],
+        [1, 1, 1, 0, 1, 1, 0, 1, 0, 1],
+        [1, 0, 2, 0, 3, 0, 0, 1, 2, 1],
+        [1, 4, 0, 0, 1, 1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    ],
+    // Level 5: Høy vanskelighetsgrad med komplekse stier, mange virus og antivirus i strategiske posisjoner
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 3, 0, 2, 1, 3, 0, 2, 0, 1],
+        [1, 0, 1, 0, 1, 1, 1, 1, 4, 1],
+        [1, 0, 1, 3, 0, 2, 0, 0, 0, 1],
+        [1, 3, 1, 1, 1, 1, 1, 0, 1, 1],
+        [1, 0, 1, 0, 1, 3, 1, 3, 5, 1],
+        [1, 2, 0, 0, 1, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 2, 1, 1],
+        [1, 4, 3, 0, 1, 2, 1, 0, 3, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    ]
+];
+
+
 
         let currentLevel = 0;
         let maze = levels[currentLevel];
@@ -203,7 +210,7 @@
             [
                 {
                     question: "Hvordan kan du beskytte deg mot virus?",
-                    options: ["Ved å bruke antivirusprogramvare", "Ved å ikke bruke internett"],
+                    options: ["ikke leste ned piratversjon av eit spill", "Ved å ikke bruke internett"],
                     correct: 0
                 },
                 {
@@ -246,10 +253,131 @@
                 for (let col = 0; col < maze[row].length; col++) {
                     switch (maze[row][col]) {
                         case 1: ctx.fillStyle = "#000"; ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize); break; // Vegg
-                        case 2: ctx.fillStyle = "#ff0000"; ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize); break; // Falsk lenke
-                        case 3: ctx.fillStyle = "#00ff00"; ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize); break; // Antivirus
-                        case 4: ctx.fillStyle = "#ffa500"; ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize); break; // Nøkkel
-                        case 5: ctx.fillStyle = "#ffd700"; ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize); break; // Mål
+                        case 2:
+    // Bakgrunnsfarge på flisen (lys rød for kontrast)
+    ctx.fillStyle = "#ffcccc";
+    ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
+
+    // Tegn hodeskallen (stor sirkel)
+    ctx.fillStyle = "#ff0000"; // Rød farge for dødninghodet
+    const skullCenterX = col * tileSize + tileSize * 0.5;
+    const skullCenterY = row * tileSize + tileSize * 0.4;
+    const skullRadius = tileSize * 0.2;
+
+    ctx.beginPath();
+    ctx.arc(skullCenterX, skullCenterY, skullRadius, 0, 2 * Math.PI);
+    ctx.fill();
+
+    // Tegn øyne (små sirkler inne i hodeskallen)
+    const eyeOffsetX = tileSize * 0.08;
+    const eyeOffsetY = tileSize * 0.05;
+    const eyeRadius = tileSize * 0.05;
+
+    ctx.fillStyle = "#000000"; // Svart for øynene
+    ctx.beginPath();
+    ctx.arc(skullCenterX - eyeOffsetX, skullCenterY - eyeOffsetY, eyeRadius, 0, 2 * Math.PI); // Venstre øye
+    ctx.arc(skullCenterX + eyeOffsetX, skullCenterY - eyeOffsetY, eyeRadius, 0, 2 * Math.PI); // Høyre øye
+    ctx.fill();
+
+    // Tegn bein under hodeskallen (diagonale linjer)
+    ctx.strokeStyle = "#ff0000"; // Samme rød farge for bein
+    ctx.lineWidth = 3;
+
+    // Venstre bein (diagonal fra nederst til venstre til øverst til høyre)
+    ctx.beginPath();
+    ctx.moveTo(col * tileSize + tileSize * 0.3, row * tileSize + tileSize * 0.7);
+    ctx.lineTo(col * tileSize + tileSize * 0.7, row * tileSize + tileSize * 0.9);
+    ctx.stroke();
+
+    // Høyre bein (diagonal fra nederst til høyre til øverst til venstre)
+    ctx.beginPath();
+    ctx.moveTo(col * tileSize + tileSize * 0.7, row * tileSize + tileSize * 0.7);
+    ctx.lineTo(col * tileSize + tileSize * 0.3, row * tileSize + tileSize * 0.9);
+    ctx.stroke();
+
+    break;
+ // Falsk lenke
+ case 3:
+    const shieldSize = tileSize * 0.8;
+    const startX = col * tileSize + (tileSize - shieldSize) / 2;
+    const startY = row * tileSize + (tileSize - shieldSize) / 2;
+
+    // Tegn skjoldets form
+    ctx.fillStyle = "#00ff00"; // Grønn farge for skjoldet
+    ctx.beginPath();
+    ctx.moveTo(startX + shieldSize / 2, startY); // Topp av skjoldet
+    ctx.lineTo(startX + shieldSize, startY + shieldSize / 2); // Høyre side
+    ctx.lineTo(startX + shieldSize / 2, startY + shieldSize); // Bunnen
+    ctx.lineTo(startX, startY + shieldSize / 2); // Venstre side
+    ctx.closePath();
+    ctx.fill();
+
+    // Tegn en mørkere kontur rundt skjoldet
+    ctx.strokeStyle = "#003300"; // Mørk grønn farge for konturen
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Legg til midtkors
+    ctx.strokeStyle = "#ffffff"; // Hvit farge for korset
+    ctx.lineWidth = 2;
+
+    // Horisontal linje i korset
+    ctx.beginPath();
+    ctx.moveTo(startX + shieldSize * 0.3, startY + shieldSize / 2);
+    ctx.lineTo(startX + shieldSize * 0.7, startY + shieldSize / 2);
+    ctx.stroke();
+
+    // Vertikal linje i korset
+    ctx.beginPath();
+    ctx.moveTo(startX + shieldSize / 2, startY + shieldSize * 0.3);
+    ctx.lineTo(startX + shieldSize / 2, startY + shieldSize * 0.7);
+    ctx.stroke();
+
+    break;
+
+ // Antivirus
+                        case 4:
+    // Bakgrunn for flisen (kan være f.eks. lys grå for kontrast)
+    ctx.fillStyle = "#f0f0f0";
+    ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
+
+    // Tegn nøkkelhode (sirkel)
+    ctx.fillStyle = "#ffa500"; // Oransje farge for nøkkelen
+    const centerX = col * tileSize + tileSize * 0.3;
+    const centerY = row * tileSize + tileSize * 0.5;
+    const headRadius = tileSize * 0.15;
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, headRadius, 0, 2 * Math.PI);
+    ctx.fill();
+
+    // Tegn nøkkelstang (rektangel)
+    ctx.fillRect(centerX + headRadius, centerY - headRadius / 2, tileSize * 0.35, headRadius);
+
+    // Tegn tenner på nøkkelen (små rektangler på stangen)
+    ctx.fillRect(centerX + headRadius + tileSize * 0.15, centerY - headRadius / 2, tileSize * 0.05, headRadius / 2);
+    ctx.fillRect(centerX + headRadius + tileSize * 0.25, centerY, tileSize * 0.05, headRadius / 2);
+
+    break;
+ // Nøkkel
+                        case 5:
+    // Tegn sjakkbrettmønster for målflagget
+    const squareSize = tileSize / 4; // Størrelsen på hver rute i flagget (juster om nødvendig)
+
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            // Sett fargen til svart eller hvit avhengig av posisjonen
+            ctx.fillStyle = (i + j) % 2 === 0 ? "#000000" : "#FFFFFF";
+            ctx.fillRect(
+                col * tileSize + i * squareSize,
+                row * tileSize + j * squareSize,
+                squareSize,
+                squareSize
+            );
+        }
+    }
+    break;
+
                     }
                 }
             }
@@ -305,7 +433,7 @@
             setTimeout(() => {
                 let answer = prompt(q.question + "\n1. " + q.options[0] + "\n2. " + q.options[1]);
                 if (parseInt(answer) - 1 === q.correct) {
-                    document.getElementById("message").textContent = "Riktig! Lenken er fjernet.";
+                    document.getElementById("message").textContent = "Riktig! Viruset er fjernet.";
                     maze[y][x] = 0; // Fjerner den falske lenken
                     score += 10; // Øker poeng ved riktig svar
                     document.getElementById("score").textContent = `Poeng: ${score}`; // Oppdaterer poengvisning
