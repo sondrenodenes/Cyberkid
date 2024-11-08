@@ -32,6 +32,19 @@
             padding: 20px;
             z-index: 1000; /* Over andre elementer */
         }
+        #gameOverPopup {
+            display: none; /* Skjult som standard */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1001;
+            text-align: center;
+        }
         #overlay {
             display: none; /* Skjult som standard */
             position: fixed;
@@ -68,6 +81,12 @@
     <button id="startGame">Start Spillet</button>
 </div>
 
+
+<div id="gameOverPopup">
+    <h2>Gratulerer!</h2>
+    <p>Du har fullført spillet med <span id="finalScore">0</span> poeng!</p>
+    <button onclick="resetGame()">Prøv på nytt</button>
+</div>
 <!-- Din eksisterende spillkode går her -->
     <meta charset="UTF-8">
     <title>Cybersikkerhetslabyrinten</title>
@@ -486,9 +505,19 @@
                 document.getElementById("message").textContent = "Nytt nivå!";
                 drawMaze();
             } else {
-                document.getElementById("message").textContent = "Gratulerer! Du har fullført spillet!";
+                // Spill over - vis popup
+                document.getElementById("gameOverPopup").style.display = "block";
+                document.getElementById("overlay").style.display = "block";
+                document.getElementById("finalScore").textContent = score; // Viser sluttpoeng
             }
         }
+
+        function resetGame() {
+            location.reload(); // Oppdaterer siden og starter spillet på nytt
+        }
+
+
+
 
         window.addEventListener("keydown", (event) => {
             switch (event.key) {
