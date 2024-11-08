@@ -23,21 +23,21 @@
             margin: 20px;
         }
         .drag-item {
-            padding: 10px;
-            margin: 10px;
-            background-color: #f0f0f0;
-            border: 2px solid #000;
-            cursor: grab;
+        padding: 10px;
+        margin: 5px 0; /* Margin for å sikre avstand mellom elementene */
+        background-color: #f0f0f0;
+        border: 2px solid #000;
+        cursor: grab;
         }
         .drop-zone {
-            width: 40%;
-            min-height: 200px;
-            padding: 10px;
-            border: 2px dashed #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        width: 40%;
+        min-height: 200px;
+        padding: 10px;
+        border: 2px dashed #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
         }
     
         .dropped {
@@ -70,76 +70,78 @@
 
     <script>
         // Definer drag- og drop-funksjonaliteten
-
         let totalDropped = 0;
-        const totalItems = 4;
-
-
+        const totalItems = 5;
+    
         const items = document.querySelectorAll('.drag-item');
         const safeZone = document.getElementById('safe-zone');
         const unsafeZone = document.getElementById('unsafe-zone');
         const message = document.getElementById('message');
-
+    
         items.forEach(item => {
             item.addEventListener('dragstart', dragStart);
         });
-
+    
         [safeZone, unsafeZone].forEach(zone => {
             zone.addEventListener('dragover', dragOver);
             zone.addEventListener('drop', dropItem);
         });
-
+    
         function dragStart(e) {
+            console.log("Dragging started:", e.target.id); // Log for å sjekke om dragstart fungerer
             e.dataTransfer.setData('text/plain', e.target.id);
         }
-
+    
         function dragOver(e) {
-            e.preventDefault();
+            e.preventDefault(); // Viktig for å tillate drop
+            console.log("Drag over zone:", e.target.id); // Log for å sjekke om dragover fungerer
         }
-
+    
         function dropItem(e) {
-            e.preventDefault();
-            const id = e.dataTransfer.getData('text');
-            const item = document.getElementById(id);
+        e.preventDefault();
+        const id = e.dataTransfer.getData('text');
+        const item = document.getElementById(id);
+
+        // Sjekk om drop-target er selve drop-sonen, ikke et annet element inni sonen
+        if (e.target.classList.contains('drop-zone')) {
+            console.log("Dropping item:", id, "into zone:", e.target.id); // Log for feilsøking
             e.target.appendChild(item);
             item.classList.add('dropped');
-
-
             totalDropped++;
-
 
             if (totalDropped === totalItems) {
                 sjekkResultater();
             }
+        } else {
+            console.log("Kan ikke slippe et element inni et annet element.");
         }
-            // const correctSafe = id === 'item1' && e.target.id === 'safe-zone';
-            // const correctUnsafe = (id === 'item2' || id === 'item3' || id === 'item4') && e.target.id === 'unsafe-zone';
-
-            function sjekkResultater() {
+        }
+    
+        function sjekkResultater() {
             let correctCount = 0;
-
+    
             // Sjekk hvert element
-items.forEach(item => {
-    const parentZone = item.parentElement.id;
-
-    // Sjekk om hvert element er plassert i riktig sone
-    if ((item.id === 'item1' || item.id === 'item5') && parentZone === 'safe-zone') {
-        correctCount++;
-        item.classList.remove('dropped');
-        item.classList.add('correct');
-    } else if ((item.id === 'item2' || item.id === 'item3' || item.id === 'item4') && parentZone === 'unsafe-zone') {
-        correctCount++;
-        item.classList.remove('dropped');
-        item.classList.add('correct');
-    } else {
-        item.classList.remove('dropped');
-        item.classList.add('wrong');
-    }
-});
-
-// Vis resultat etter at alle elementene er sjekket
-message.textContent = `Du plasserte ${correctCount} riktige av ${totalItems}!`;
-
-    </script>
+            items.forEach(item => {
+                const parentZone = item.parentElement.id;
+    
+                // Sjekk om hvert element er plassert i riktig sone
+                if ((item.id === 'item1') && parentZone === 'safe-zone') {
+                    correctCount++;
+                    item.classList.remove('dropped');
+                    item.classList.add('correct');
+                } else if ((item.id === 'item2' || item.id === 'item3' || item.id === 'item4' || item.id === 'item5') && parentZone === 'unsafe-zone') {
+                    correctCount++;
+                    item.classList.remove('dropped');
+                    item.classList.add('correct');
+                } else {
+                    item.classList.remove('dropped');
+                    item.classList.add('wrong');
+                }
+            });
+    
+            // Vis resultat etter at alle elementene er sjekket
+            message.textContent = `Du plasserte ${correctCount} riktige av ${totalItems}!`;
+        }
+    </script>      
 </body>
 </html>
